@@ -1,0 +1,31 @@
+﻿@page "/account"
+
+@using Template.Infrastructure.Services.Authentication;
+
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navManager
+
+<PageTitle>Account</PageTitle>
+
+<AuthorizeView Roles="Admin, User">
+
+    <Authorized>
+        <div class="flex flex-row gap-2">
+
+            <a class="border border-1 p-2" @onclick="Logout" href="javascript:void(0)">Logout</a>
+
+        </div>
+    </Authorized>
+
+</AuthorizeView>
+
+@code {
+
+    private async Task Logout()
+    {
+        var authStateProvider = (AuthStateProvider)authenticationStateProvider;
+        await authStateProvider.UpdateAuthenticationState(null);
+        navManager.NavigateTo("/");
+    }
+
+}

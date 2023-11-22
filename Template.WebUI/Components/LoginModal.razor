@@ -1,0 +1,103 @@
+﻿@using MediatR;
+@using Template.Infrastructure.Services.Authentication;
+@using Template.Application.Features.Account.Shared.Dto;
+@using Template.Application.Features.Account.Queries;
+@using Template.Infrastructure.EventHandlers;
+
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navManager
+@inject IJSRuntime jsRuntime
+@inject IMediator Mediator
+
+@if (_showModal)
+{
+    <div class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="fixed inset-0 bg-black opacity-50" @onclick="ToggleModal"></div>
+        <div class="flex items-center justify-center w-full h-full">
+
+            <div class="bg-gray-50 rounded-lg shadow-lg max-w-sm w-full m-auto z-10" @onclick:stopPropagation>
+
+                <div class="flex p-3 justify-center items-center bg-slate-800 rounded-t-lg">
+                    <span class="ml-1 text-white text-xl">Sign in</span>
+                </div>
+
+                <form class="w-full flex flex-col" @onsubmit="Authenticate">
+
+                    <div class="p-3">
+
+                        <div class="w-full mt-1">
+                            <label for="email-input" class="text-gray-500">Email Address</label>
+                            <input id="email-input" name="maiL" type="email" @bind="_currentAccount.Email" class="border border-gray-300 w-full p-2 focus:outline-none" placeholder="exemple@gmail.com" />
+                        </div>
+
+                        <div class="mt-4 w-full">
+                            <label for="password-input" class="text-gray-500">Password</label>
+                            <input id="password-input" type="password" @bind="_currentAccount.Password" class="border border-gray-300 w-full p-2 focus:outline-none" placeholder="••••••" />
+                        </div>
+
+                        <div class="text-center mt-2 mb-3">
+                            Forgot your Password ?
+                        </div>
+
+                        <button type="submit" class="font-Rubik p-2 mb-1 w-full flex flex-row items-center justify-center bg-green-600 hover:bg-green-500 active:bg-green-700 rounded-lg">
+                            <span class="ml-1 text-white">Sign in</span>
+                        </button>
+
+                    </div>
+
+                    <div class="bg-slate-800 p-3 rounded-b-lg">
+
+                        <div class="text-center mb-2 text-white">No account ?</div>
+
+                        <button @onclick="ToggleModal" class="font-Rubik p-2 mb-1 w-full flex flex-row items-center justify-center bg-orange-500 hover:bg-orange-400 active:bg-orange-600 rounded-lg">
+                            <span class="ml-1 text-white">Create an account</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    private bool _showModal = false;
+
+    public void ToggleModal()
+    {
+        _showModal = !_showModal;
+        StateHasChanged();
+    }
+
+    private AccountDto _currentAccount = new();
+
+    private async Task Authenticate()
+    {
+        // STEP 1 => Get Authentication
+        var account = await Mediator.Send(new GetAuthenticationQuery(_currentAccount));
+
+        if (account == null || account.Password != _currentAccount.Password)
+        {
+            await jsRuntime.InvokeVoidAsync("alert", "Invalid User Name or Password");
+            return;
+        }
+
+        else
+        {
+            // STEP 2 => Get Session Data
+            var sessionDatas = await Mediator.Send(new GetSessionDataQuery(account));
+
+            // STEP 3 => Assign datas to Storage
+            var storageSession = SessionHandler.GetSession(sessionDatas);
+
+            var authStateProvider = (AuthStateProvider)authenticationStateProvider;
+            await authStateProvider.UpdateAuthenticationState(storageSession);
+
+            navManager.NavigateTo("/", true);
+        }
+    }
+
+}

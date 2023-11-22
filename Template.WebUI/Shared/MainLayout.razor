@@ -1,0 +1,25 @@
+﻿@inherits LayoutComponentBase
+
+@using Template.WebUI.Shared.Themes;
+
+<PageTitle>Template.WebUI</PageTitle>
+
+<div class="flex w-full h-screen">
+
+    <Header />
+
+    <main class="w-full mt-16 bg-slate-50">
+
+        <CascadingValue Value="@ApplicationTheme">
+            @Body
+        </CascadingValue>
+
+    </main>
+
+</div>
+
+@code {
+
+    public AppTheme ApplicationTheme { get; set; } = new AppTheme();
+
+}

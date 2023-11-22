@@ -1,0 +1,29 @@
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+
+                <NotAuthorized>
+                    <p class="p-4">You are not authorized Baby</p>
+                </NotAuthorized>
+
+                <Authorizing>
+                    <p class="p-4">You are getting authorized</p>
+                </Authorizing>
+
+            </AuthorizeRouteView>
+        </Found>
+
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+
+            <LayoutView Layout="@typeof(MainLayout)">
+
+                <p class="p-4">(ToDo)</p>
+
+            </LayoutView>
+        </NotFound>
+
+    </Router>
+</CascadingAuthenticationState>

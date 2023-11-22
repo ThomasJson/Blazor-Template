@@ -1,0 +1,83 @@
+﻿@using Template.WebUI.Components;
+
+<header class="flex flex-row justify-between items-center w-full h-16 fixed top-0 left-0 bg-slate-800">
+
+    @* Logo + Titre *@
+    <div class="flex flex-row w-1/4 gap-2 items-center ml-4">
+
+        <div class="logo">
+            <img src="/img/newLogo.svg" />
+        </div>
+
+        <a class="hidden lg:flex h-min text-white font-bold text-2xl" href="">Template</a>
+
+    </div>
+
+    @* Nav Desktop *@
+    <div class="hidden lg:flex flex-row w-3/4 justify-between items-center">
+
+        <nav class="flex flex-row gap-2 items-center p-4">
+
+
+
+        </nav>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="mr-4">
+                    <a class="text-white text-xl font-bold hover:bg-blue-700 px-2 py-1 rounded block" href="/account">
+                        @context.User.Identity.Name
+                    </a>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <button class="text-white text-xl font-bold hover:bg-blue-700 px-2 py-1 rounded block mr-4" @onclick="ShowLoginModal">
+                    Sign in
+                </button>
+            </NotAuthorized>
+        </AuthorizeView>
+
+    </div>
+
+    @* Login Icons smartphone *@
+    <div class="flex flex-row lg:hidden">
+
+        <div class="text-white text-xl mr-2">
+
+            <AuthorizeView>
+
+                <Authorized>
+                    <a class="text-white text-xl font-bold hover:bg-blue-700 px-2 py-1 rounded block" href="/account">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </Authorized>
+
+                <NotAuthorized>
+                    <button class="text-white text-xl font-bold hover:bg-blue-700 px-2 py-1 rounded block" @onclick="ShowLoginModal">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </button>
+                </NotAuthorized>
+
+            </AuthorizeView>
+
+        </div>
+
+    </div>
+
+</header>
+
+<LoginModal @ref="_loginModal" />
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private LoginModal _loginModal;
+
+    private void ShowLoginModal()
+    {
+        _loginModal.ToggleModal();
+    }
+
+}
