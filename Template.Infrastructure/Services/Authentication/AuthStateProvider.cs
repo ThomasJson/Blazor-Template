@@ -19,8 +19,6 @@ namespace Template.Infrastructure.Services.Authentication
         {
             try
             {
-                // await Task.Delay(2000); => To display Authorizing View
-
                 var accountSessionStorageResult = await _sessionStorage.GetAsync<AccountSession>("AccountSession");
                 var accountSession = accountSessionStorageResult.Success ? accountSessionStorageResult.Value : null;
                 if (accountSession == null)
@@ -36,7 +34,6 @@ namespace Template.Infrastructure.Services.Authentication
 
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
             }
-
             catch
             {
                 return await Task.FromResult(new AuthenticationState(_anonymous));

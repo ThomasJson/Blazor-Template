@@ -8,7 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddAuthenticationCore();
 
-// Clean Architecture dependencies
+// Clean Architecture Dependencies
 builder.Services.AddPersistenceLayer(builder.Configuration);
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddApplicationLayer();
