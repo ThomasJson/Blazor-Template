@@ -18,7 +18,7 @@ namespace Template.Application.Features.Account.Queries
 
         public async Task<AccountDto> Handle(GetAuthenticationQuery query, CancellationToken cancellationToken)
         {
-            var accountEntity = await _authService.GetAuthentication(query.AccountDto);
+            var accountEntity = await _authService.GetAuthenticatedAccount(query.AccountDto);
 
             if (accountEntity != null)
             {

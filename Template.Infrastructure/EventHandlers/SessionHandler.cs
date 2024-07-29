@@ -4,18 +4,15 @@ namespace Template.Infrastructure.EventHandlers
 {
     public static class SessionHandler
     {
-        public static AccountSession GetSession(Dictionary<string, string> sessionDatas)
+        public static AccountSession AssignDataToCurrentSession(string UserName, string RoleName)
         {
-            if (sessionDatas != null)
+            
+            return new AccountSession
             {
-                return new AccountSession
-                {
-                    UserName = sessionDatas["UserName"],
-                    Role = sessionDatas["Role"]
-                };
-            }
-
-            else { return null; }
+                UserName = UserName,
+                Role = RoleName
+            };
+            
         }
     }
 }

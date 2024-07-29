@@ -5,7 +5,7 @@ namespace Template.Application.Interfaces.Services
 {
     public interface IAuthService
     {
-        Task<AccountEntity> GetAuthentication(AccountDto accountDto);
-        Task<Dictionary<string, string>> GetSessionDatas(AccountDto accountDto);
+        Task<AccountEntity> GetAuthenticatedAccount(AccountDto accountDto);
     }
+
 }

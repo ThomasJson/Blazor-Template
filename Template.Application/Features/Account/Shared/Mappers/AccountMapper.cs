@@ -11,8 +11,8 @@ namespace Template.Application.Features.Account.Shared.Mappers
             {
                 Id = accountEntity.Id,
                 Email = accountEntity.Email,
-                Password = accountEntity.Password,
-                UserId = accountEntity.UserId
+                UserFirstName = accountEntity.User.FirstName,
+                RoleName = accountEntity.RolesLink.FirstOrDefault()?.Role.Name
             };
 
             return accountDto;

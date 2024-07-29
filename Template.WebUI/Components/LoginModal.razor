@@ -76,28 +76,16 @@
 
     private async Task Authenticate()
     {
-        // STEP 1 => Get Authentication
+        // Get Authenticated Account
         var account = await Mediator.Send(new GetAuthenticationQuery(_currentAccount));
 
-        if (account == null || account.Password != _currentAccount.Password)
-        {
-            await jsRuntime.InvokeVoidAsync("alert", "Invalid User Name or Password");
-            return;
-        }
+        // Assign data to Storage
+        var storageSession = SessionHandler.AssignDataToCurrentSession(account.UserFirstName, account.RoleName);
 
-        else
-        {
-            // STEP 2 => Get Session Data
-            var sessionDatas = await Mediator.Send(new GetSessionDataQuery(account));
+        var authStateProvider = (AuthStateProvider)authenticationStateProvider;
+        await authStateProvider.UpdateAuthenticationState(storageSession);
 
-            // STEP 3 => Assign datas to Storage
-            var storageSession = SessionHandler.GetSession(sessionDatas);
-
-            var authStateProvider = (AuthStateProvider)authenticationStateProvider;
-            await authStateProvider.UpdateAuthenticationState(storageSession);
-
-            navManager.NavigateTo("/", true);
-        }
+        navManager.NavigateTo("/", true);
     }
 
 }

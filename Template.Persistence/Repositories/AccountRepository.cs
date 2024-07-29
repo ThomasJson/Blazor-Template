@@ -16,9 +16,13 @@ namespace Template.Persistence.Repositories
 
         public async Task<AccountEntity> GetAccountByEmailAdress(AccountDto accountDto)
         {
-            return await _context.Accounts.FirstOrDefaultAsync(x => x.Email == accountDto.Email);
+            return await _context.Accounts
+                .Include(a => a.User)                 
+                .Include(a => a.RolesLink)            
+                    .ThenInclude(r => r.Role)       
+                .FirstOrDefaultAsync(x => x.Email == accountDto.Email);
         }
-        
+
         public void Dispose()
         {
             _context.Dispose();
