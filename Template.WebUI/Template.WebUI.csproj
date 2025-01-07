@@ -7,10 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="wwwroot\js\**" />
-	  <Content Remove="wwwroot\js\**" />
-	  <EmbeddedResource Remove="wwwroot\js\**" />
-	  <None Remove="wwwroot\js\**" />
+	  <_ContentIncludedByDefault Remove="wwwroot\css\app.css" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,6 +23,10 @@
 		<ProjectReference Include="..\Template.Application\Template.Application.csproj" />
 		<ProjectReference Include="..\Template.Infrastructure\Template.Infrastructure.csproj" />
 		<ProjectReference Include="..\Template.Persistence\Template.Persistence.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\fonts\" />
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,63 @@
+﻿<div class="p-3 rounded-lg bg-gray-100 dark:bg-gray-700">
+    <EditForm Model="_signUpModel" OnValidSubmit="HandleSignUp">
+        <div class="flex flex-row justify-between">
+            <div class="mt-2 w-49">
+                <label for="firstName-input" class="block text-gray-700 dark:text-gray-200">Prénom</label>
+                <InputText id="firstName-input" @bind-Value="_signUpModel.FirstName"
+                           class="border border-gray-300 w-full p-2 focus:outline-none dark:text-gray-300 dark:bg-gray-800" />
+                @* @if (string.IsNullOrEmpty(_signUpModel.FirstName) || _signUpModel.FirstName.Length < 3)
+                {
+                    <p class="text-red-400 text-sm">Veuillez entrer un prénom valide (au moins 3 caractères).</p>
+                } *@
+            </div>
+
+            <div class="mt-2 w-49">
+                <label for="pseudo-input" class="block text-gray-700 dark:text-gray-200">Pseudo</label>
+                <InputText id="pseudo-input" @bind-Value="_signUpModel.Pseudo"
+                           class="border border-gray-300 w-full p-2 focus:outline-none dark:text-gray-300 dark:bg-gray-800" />
+                @* @if (string.IsNullOrEmpty(_signUpModel.Pseudo) || _signUpModel.Pseudo.Length < 3)
+                {
+                    <p class="text-red-400 text-sm">Veuillez entrer un pseudo valide (au moins 3 caractères).</p>
+                } *@
+            </div>
+        </div>
+
+        <div class="mt-2 w-full">
+            <label for="email-input" class="block text-gray-700 dark:text-gray-200">Email</label>
+            <InputText id="email-input" @bind-Value="_signUpModel.Email"
+                       class="border border-gray-300 w-full p-2 focus:outline-none dark:text-gray-300 dark:bg-gray-800" />
+            @* @if (!IsValidEmail(_signUpModel.Email))
+            {
+                <p class="text-red-400 text-sm">Veuillez entrer un email valide.</p>
+            } *@
+        </div>
+
+        <button type="submit" class="p-2 mt-4 w-full bg-gray-50 hover:bg-orange-400 text-white rounded-lg flex items-center justify-center">
+            <i class="bi bi-person-plus mr-2"></i> Inscription
+        </button>
+    </EditForm>
+</div>
+
+@code {
+    private SignUpModel _signUpModel = new SignUpModel();
+
+    private void HandleSignUp()
+    {
+        if (IsValidEmail(_signUpModel.Email) && _signUpModel.FirstName.Length >= 3 && _signUpModel.Pseudo.Length >= 3)
+        {
+            Console.WriteLine("Inscription réussie !");
+        }
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        return !string.IsNullOrEmpty(email) && email.Contains("@") && email.Contains(".");
+    }
+
+    private class SignUpModel
+    {
+        public string FirstName { get; set; }
+        public string Pseudo { get; set; }
+        public string Email { get; set; }
+    }
+}

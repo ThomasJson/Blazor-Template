@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Localization;
+
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+
+<div class="p-4">
+    <select @onchange="ChangeLanguage">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+    </select>
+</div>
+
+@code {
+    private async Task ChangeLanguage(ChangeEventArgs e)
+    {
+        var culture = e.Value?.ToString();
+        if (!string.IsNullOrEmpty(culture))
+        {
+            var localizationCookie = CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture));
+
+            // Corrige la syntaxe pour définir le cookie
+            var cookieScript = $"{CookieRequestCultureProvider.DefaultCookieName}={localizationCookie};path=/;expires={DateTime.UtcNow.AddYears(1):R}";
+            await JSRuntime.InvokeVoidAsync("eval", $"document.cookie = '{cookieScript}'");
+
+            // Recharge la page pour appliquer la nouvelle langue
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
+    }
+}

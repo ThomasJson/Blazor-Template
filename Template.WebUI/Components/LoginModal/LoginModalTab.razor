@@ -1,0 +1,58 @@
+﻿<div class="p-3 rounded-lg bg-white dark:bg-darkTertiary border-black border-2">
+
+    <EditForm Model="_loginModel" OnValidSubmit="HandleLogin">
+
+        <div class="w-full mt-2 border-black border-2 p-3 rounded-lg">
+
+            <label for="email-input" class="block text-gray-700 dark:text-gray-200">Email</label>
+            <InputText id="email-input" @bind-Value="_loginModel.Email"
+                       class="border border-gray-300 w-full p-2 focus:outline-none dark:text-gray-300 dark:bg-gray-800" />
+            @* @if (!IsEmailValid)
+            {
+                <p class="text-red-400 text-sm">Veuillez saisir un email valide.</p>
+            } *@
+
+        </div>
+
+        <div class="mt-2 w-full border-black border-2 p-3 rounded-lg">
+            <label for="password-input" class="block text-gray-700 dark:text-gray-200">Mot de passe</label>
+            <InputText type="password" id="password-input" @bind-Value="_loginModel.Password"
+                       class="border border-gray-300 w-full p-2 focus:outline-none dark:text-gray-300 dark:bg-gray-800" />
+            @* @if (!IsPasswordValid)
+            {
+                <p class="text-red-400 text-sm">Veuillez saisir un mot de passe valide.</p>
+            } *@
+        </div>
+
+        @* <div>
+            Forgot your Password ?
+        </div> *@
+
+        <button type="submit" class="p-2 mt-4 w-full bg-white-50 hover:bg-gray-50 text-black border-2 border-black rounded-lg flex items-center justify-center">
+            <i class="bi bi-box-arrow-in-right mr-2"></i> Connexion
+        </button>
+    </EditForm>
+</div>
+
+@code {
+    private LoginModel _loginModel = new LoginModel();
+    private bool IsEmailValid = true;
+    private bool IsPasswordValid = true;
+
+    private void HandleLogin()
+    {
+        IsEmailValid = !string.IsNullOrEmpty(_loginModel.Email) && _loginModel.Email.Contains("@");
+        IsPasswordValid = !string.IsNullOrEmpty(_loginModel.Password) && _loginModel.Password.Length >= 6;
+
+        if (IsEmailValid && IsPasswordValid)
+        {
+            Console.WriteLine("Connexion réussie !");
+        }
+    }
+
+    private class LoginModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+}

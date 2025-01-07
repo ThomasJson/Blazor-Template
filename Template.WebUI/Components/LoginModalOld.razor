@@ -15,10 +15,10 @@
         <div class="fixed inset-0 bg-black opacity-50" @onclick="ToggleModal"></div>
         <div class="flex items-center justify-center w-full h-full">
 
-            <div class="bg-gray-50 rounded-lg shadow-lg max-w-sm w-full m-auto z-10" @onclick:stopPropagation>
+            <div class="bg-white rounded-lg shadow-lg max-w-sm w-full m-auto z-10" @onclick:stopPropagation>
 
-                <div class="flex p-3 justify-center items-center bg-slate-800 rounded-t-lg">
-                    <span class="ml-1 text-white text-xl">Sign in</span>
+                <div class="flex p-3 justify-center items-center bg-white rounded-t-lg">
+                    <span class="ml-1 text-xl">Sign in</span>
                 </div>
 
                 <form class="w-full flex flex-col" @onsubmit="Authenticate">
@@ -39,21 +39,21 @@
                             Forgot your Password ?
                         </div>
 
-                        <button type="submit" class="font-Rubik p-2 mb-1 w-full flex flex-row items-center justify-center bg-green-600 hover:bg-green-500 active:bg-green-700 rounded-lg">
-                            <span class="ml-1 text-white">Sign in</span>
+                        <button type="submit" class="p-2 mb-1 w-full flex flex-row items-center justify-center bg-white hover:bg-gray-50 active:bg-gray-50 rounded-lg border-2 border-black">
+                            <span class="ml-1">Sign in</span>
                         </button>
 
                     </div>
 
-                    <div class="bg-slate-800 p-3 rounded-b-lg">
+                    @* <div class="bg-white p-3 rounded-b-lg">
 
-                        <div class="text-center mb-2 text-white">No account ?</div>
+                        <div class="text-center mb-2">No account ?</div>
 
-                        <button @onclick="ToggleModal" class="font-Rubik p-2 mb-1 w-full flex flex-row items-center justify-center bg-orange-500 hover:bg-orange-400 active:bg-orange-600 rounded-lg">
-                            <span class="ml-1 text-white">Create an account</span>
+                        <button @onclick="ToggleModal" class="p-2 mb-1 w-full flex flex-row items-center justify-center bg-orange-500 hover:bg-orange-400 active:bg-orange-600 rounded-lg">
+                            <span class="ml-1">Create an account</span>
                         </button>
 
-                    </div>
+                    </div> *@
 
                 </form>
 

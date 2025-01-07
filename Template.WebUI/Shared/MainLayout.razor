@@ -1,25 +1,37 @@
 ﻿@inherits LayoutComponentBase
 
+@using Microsoft.Extensions.Localization
 @using Template.WebUI.Shared.Themes;
+
+@inject AppTheme ApplicationTheme
 
 <PageTitle>Template.WebUI</PageTitle>
 
-<div class="flex w-full h-screen">
+<CascadingValue Value="@ApplicationTheme">
 
-    <Header />
+    <div class="flex w-full h-screen">
 
-    <main class="w-full mt-16 bg-slate-50">
+        <Header />
 
-        <CascadingValue Value="@ApplicationTheme">
+        <main class="w-full mt-16 bg-lightPrimary dark:bg-lightTertiary">
             @Body
-        </CascadingValue>
+        </main>
 
-    </main>
+    </div>
 
-</div>
+</CascadingValue>
 
 @code {
 
-    public AppTheme ApplicationTheme { get; set; } = new AppTheme();
+    private bool _initialized;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !_initialized)
+        {
+            await ApplicationTheme.InitializeThemeAsync();
+            _initialized = true;
+        }
+    }
 
 }
