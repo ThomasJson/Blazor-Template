@@ -7,31 +7,34 @@
 
             <div class="relative p-4 rounded-lg w-11/12 sm:max-w-lg mx-auto bg-white dark:bg-darkPrimary font-tajawalRegular border-2 border-black">
 
-                <div class="flex space-x-1 rounded-lg p-2 mb-4">
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-row gap-4 rounded-lg">
 
-                    <button @onclick="SetLoginTab"
-                            class="@($"flex flex-row justify-center items-center gap-1 w-full rounded-l-lg py-2.5 text-sm font-medium leading-5 {GetTabButtonClasses("Login")}")">
-                        <i class="fa-solid fa-arrow-right-to-bracket mr-1"></i>
-                        <span class="text-xl">Connexion</span>
-                    </button>
+                        <button @onclick="SetLoginTab"
+                                class="@($"button-3d flex flex-row justify-center items-center gap-1 w-full rounded-l-lg py-2.5 text-sm font-medium leading-5 {GetTabButtonClasses("Login")}")">
+                            <i class="fa-solid fa-arrow-right-to-bracket mr-1"></i>
+                            <span class="text-xl">Connexion</span>
+                        </button>
 
-                    <button @onclick="SetSignUpTab"
-                            class="@($"flex flex-row justify-center items-center gap-1 w-full rounded-r-lg py-2.5 text-sm font-medium leading-5 {GetTabButtonClasses("SignUp")}")">
-                        <i class="fa-solid fa-user-plus mr-1"></i>
-                        <span class="text-xl">Inscription</span>
-                    </button>
+                        <button @onclick="SetSignUpTab"
+                                class="@($"button-3d flex flex-row justify-center items-center gap-1 w-full rounded-r-lg py-2.5 text-sm font-medium leading-5 {GetTabButtonClasses("SignUp")}")">
+                            <i class="fa-solid fa-user-plus mr-1"></i>
+                            <span class="text-xl">Inscription</span>
+                        </button>
 
+                    </div>
+                
+                    @if (_currentTab == "Login")
+                    {
+                        <LoginModalTab />
+                    }
+
+                    else if (_currentTab == "SignUp")
+                    {
+                        <SignUpModalTab />
+                    }
                 </div>
 
-                @if (_currentTab == "Login")
-                {
-                    <LoginModalTab />
-                }
-
-                else if (_currentTab == "SignUp")
-                {
-                    <SignUpModalTab />
-                }
             </div>
         </div>
     </div>

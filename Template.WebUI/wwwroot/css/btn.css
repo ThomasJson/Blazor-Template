@@ -1,0 +1,23 @@
+﻿.button-3d {
+    display: inline-block;
+    /*padding: 10px 20px;*/
+    /*font-size: 16px;
+    font-weight: bold;*/
+    text-align: center;
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 6px;
+    box-shadow: 1px 1px 0 black;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .button-3d:hover {
+        /*background-color: #f0f0f0;  Légère teinte grise pour indiquer le survol */
+    }
+
+    .button-3d:active {
+        box-shadow: 0 0 0 black; /* Supprime l'ombre pour simuler un enfoncement */
+        transform: translate(1px, 1px); /* Déplace le bouton légèrement */
+    }

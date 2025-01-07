@@ -22,7 +22,7 @@
 
             @* <LanguageSelector /> *@
 
-            <button class="px-2 py-1 rounded"
+            <button class="button-3d px-2 rounded"
                     @onclick="ToggleTheme">
                 <i class="fa-solid fa-bolt text-blue-600 dark:text-white rounded"></i>
             </button>
@@ -38,7 +38,7 @@
                 </div>
             </Authorized>
             <NotAuthorized>
-                <button class="text-xl px-2 border-2 border-black dark:border-white rounded block mr-4 ml-2" @onclick="ShowLoginModal">
+                <button class="button-3d text-xl px-2 border-2 border-black dark:border-white rounded block mr-4 ml-2" @onclick="ShowLoginModal">
                     @Localizer["HeaderConnexion"]
                 </button>
             </NotAuthorized>
