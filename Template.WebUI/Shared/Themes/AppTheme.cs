@@ -18,8 +18,6 @@ namespace Template.WebUI.Shared.Themes
         {
             var storedTheme = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "theme");
             CurrentTheme = string.IsNullOrEmpty(storedTheme) ? "light" : storedTheme;
-
-            // Applique la classe "dark" si nécessaire
             await ApplyThemeAsync();
         }
 
@@ -27,8 +25,6 @@ namespace Template.WebUI.Shared.Themes
         {
             CurrentTheme = CurrentTheme == "light" ? "dark" : "light";
             await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "theme", CurrentTheme);
-
-            // Applique le nouveau thème
             await ApplyThemeAsync();
         }
 
