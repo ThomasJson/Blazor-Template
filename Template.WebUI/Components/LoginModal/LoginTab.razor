@@ -1,0 +1,66 @@
+﻿@using MediatR;
+@using Template.Infrastructure.Services.Authentication;
+@using Template.Application.Features.Account.Shared.Dto;
+@using Template.Application.Features.Account.Queries;
+@using Template.Infrastructure.EventHandlers;
+@using Template.WebUI.Components.Shared
+
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navManager
+@inject IJSRuntime jsRuntime
+@inject IMediator Mediator
+
+<div class="p-3 rounded-lg bg-white dark:bg-darkTertiary border-black border-2">
+    <EditForm Model="loginInput" OnValidSubmit="HandleLogin">
+        <div>
+            <div class="w-full mt-2 p-3 rounded-lg">
+                <label for="email-input" class="block text-gray-700 dark:text-gray-200">Email</label>
+                <InputText id="email-input" @bind-Value="loginInput.Email"
+                    class="border-2 border-black rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-300 w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+            </div>
+
+            <div class="mt-2 w-full p-3 rounded-lg">
+                <label for="password-input" class="block text-gray-700 dark:text-gray-200">Mot de passe</label>
+                <InputText type="password" id="password-input" @bind-Value="loginInput.Password"
+                    class="border-2 border-black rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-300 w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+            </div>
+
+            <GenericButton Icon="fa-solid fa-arrow-right-to-bracket mr-1" Type="submit">
+                Connexion
+            </GenericButton>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private LoginInput loginInput = new LoginInput();
+    private bool isEmailValid = true;
+    private bool isPasswordValid = true;
+    private async Task HandleLogin()
+    {
+        isEmailValid = !string.IsNullOrEmpty(loginInput.Email) && loginInput.Email.Contains("@");
+        isPasswordValid = !string.IsNullOrEmpty(loginInput.Password) && loginInput.Password.Length >= 6;
+
+        if (isEmailValid && isPasswordValid)
+        {
+            var accountRequest = new AccountDto
+            {
+                Email = loginInput.Email,
+                Password = loginInput.Password
+            };
+
+            var account = await Mediator.Send(new GetAuthenticationQuery(accountRequest));
+            var storageSession = SessionHandler.AssignDataToCurrentSession(account.UserFirstName, account.RoleName);
+            var authStateProvider = (AuthStateProvider)authenticationStateProvider;
+            await authStateProvider.UpdateAuthenticationState(storageSession);
+
+            navManager.NavigateTo("/", true);
+        }
+    }
+    private class LoginInput
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
+}
