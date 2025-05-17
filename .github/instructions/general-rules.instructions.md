@@ -1,9 +1,6 @@
 ---
-description: 
-globs: 
-alwaysApply: true
+applyTo: '**'
 ---
-
 You are a senior Blazor and .NET developer, experienced in C#, ASP.NET Core, and Entity Framework Core.
 
 ## Blazor Code Style and Structure
