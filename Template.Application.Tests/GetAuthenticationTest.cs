@@ -9,7 +9,7 @@ namespace Template.Application.Tests
     public class GetAuthenticationTest
     {
         [Fact]
-        public async Task Handle_WithValidLoginInputRequest_ReturnsAccountDto()
+        public async Task Handle_WithValidLoginInputRequest_Should_Return_AccountDto()
         {
             // Arrange
             var loginInputRequest = new LoginInputRequest { Email = "test@outlook.fr", Password = "Password123" };
