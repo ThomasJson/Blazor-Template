@@ -10,30 +10,34 @@
 @inject IJSRuntime jsRuntime
 @inject IMediator Mediator
 
-<div class="p-3 rounded-lg bg-white dark:bg-darkTertiary border-black border-2">
+<div class="p-3 rounded-lg border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white">
     <EditForm Model="loginInput" OnValidSubmit="HandleLogin">
-        <div>
-            <div class="w-full mt-2 p-3 rounded-lg">
-                <label for="email-input" class="block text-gray-700 dark:text-gray-200">Email</label>
-                <InputText id="email-input" @bind-Value="loginInput.Email"
-                    class="border-2 border-black rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-300 w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
-            </div>
+        <div class="flex flex-col items-center">
+            <div class="w-3/4">
+                <div class="w-full p-3 rounded-lg">
+                    <label for="email-input" class="block text-gray-700 dark:text-gray-200">Email</label>
+                    <InputText id="email-input" @bind-Value="loginInput.Email"
+                        class="border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+                </div>
 
-            <div class="mt-2 w-full p-3 rounded-lg">
-                <label for="password-input" class="block text-gray-700 dark:text-gray-200">Mot de passe</label>
-                <InputText type="password" id="password-input" @bind-Value="loginInput.Password"
-                    class="border-2 border-black rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-300 w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+                <div class="w-full p-3 rounded-lg">
+                    <label for="password-input" class="block text-gray-700 dark:text-gray-200">Mot de passe</label>
+                    <InputText type="password" id="password-input" @bind-Value="loginInput.Password"
+                        class="border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+                </div>
+                
+                <div class="w-full p-3 rounded-lg">
+                    <GenericButton Icon="fa-solid fa-arrow-right-to-bracket" Type="submit">
+                        Connexion
+                    </GenericButton>
+                </div>
             </div>
-
-            <GenericButton Icon="fa-solid fa-arrow-right-to-bracket mr-1" Type="submit">
-                Connexion
-            </GenericButton>
         </div>
     </EditForm>
 </div>
 
 @code {
-    private LoginInput loginInput = new LoginInput();
+    private LoginInputRequest loginInput = new LoginInputRequest();
     private bool isEmailValid = true;
     private bool isPasswordValid = true;
     private async Task HandleLogin()
@@ -57,7 +61,7 @@
             navManager.NavigateTo("/", true);
         }
     }
-    private class LoginInput
+    private class LoginInputRequest
     {
         public string Email { get; set; }
         public string Password { get; set; }

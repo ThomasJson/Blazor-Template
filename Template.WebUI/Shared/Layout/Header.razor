@@ -1,7 +1,8 @@
-﻿@using Microsoft.Extensions.Localization
-@using Template.WebUI.Components
+﻿@using Microsoft.Extensions.Localization;
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Template.WebUI.Components;
 @using Template.WebUI.Components.LoginModal;
-@using Template.WebUI.Shared.Themes
+@using Template.WebUI.Shared.Themes;
 
 @inject IJSRuntime JSRuntime
 @inject IStringLocalizer<Header> Localizer
@@ -10,23 +11,17 @@
 
     @* Logo + Titre *@
     <div class="flex flex-row w-1/2 lg:w-1/4 gap-2 items-center ml-4">
-
         <a class="text-2xl" href="">Template</a>
-
     </div>
 
     @* Nav Desktop *@
     <div class="hidden lg:flex flex-row w-3/4 justify-end items-center">
-
         <nav class="flex flex-row gap-2 items-center">
-
             @* <LanguageSelector /> *@
-
-            <button class="button-3d px-2 rounded"
+            <button class="button-3d px-2 rounded bg-lightPrimary dark:bg-darkPrimary border-2 border-black dark:border-lightPrimary"
                     @onclick="ToggleTheme">
-                <i class="fa-solid fa-bolt text-blue-600 dark:text-white rounded"></i>
+                <i class="fa-solid fa-bolt text-black dark:text-white"></i>
             </button>
-
         </nav>
 
         <AuthorizeView>
@@ -38,7 +33,7 @@
                 </div>
             </Authorized>
             <NotAuthorized>
-                <button class="button-3d text-xl px-2 border-2 border-black dark:border-white rounded block mr-4 ml-2" @onclick="ShowLoginModal">
+                <button class="button-3d text-xl px-2 border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white rounded block mr-4 ml-2" @onclick="ShowLoginModal">
                     @Localizer["HeaderConnexion"]
                 </button>
             </NotAuthorized>
@@ -48,51 +43,43 @@
 
     @* Login Icons smartphone *@
     <div class="flex flex-row lg:hidden">
-
         <div class="text-xl mr-2">
-
             <AuthorizeView>
-
                 <Authorized>
                     <a class="text-xl font-bold hover:bg-blue-700 px-2 py-1 rounded block" href="/account">
                         <i class="fa-solid fa-user"></i>
                     </a>
                 </Authorized>
-
                 <NotAuthorized>
                     <button class="text-xl font-bold hover:bg-blue-700 px-2 py-1 rounded block" @onclick="ShowLoginModal">
                         <i class="fa-solid fa-arrow-right-to-bracket"></i>
                     </button>
                 </NotAuthorized>
-
             </AuthorizeView>
-
         </div>
-
     </div>
 
 </header>
 
-<LoginModalNew @ref="_loginModal" />
+<LoginModal @ref="loginModal" />
 
 @code {
 
     [CascadingParameter]
     public AppTheme ApplicationTheme { get; set; }
 
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+    private LoginModal loginModal;
+
     private async Task ToggleTheme()
     {
         await ApplicationTheme.ToggleThemeAsync();
     }
 
-    [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationState { get; set; }
-
-    private LoginModalNew _loginModal;
-
     private void ShowLoginModal()
     {
-        _loginModal.ToggleModal();
+        loginModal.ToggleModal();
     }
 
 }
