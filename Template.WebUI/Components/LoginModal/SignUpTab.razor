@@ -1,41 +1,45 @@
 ﻿@using Template.WebUI.Components.Shared
 
-<div class="p-3 rounded-lg bg-white dark:bg-darkTertiary border-black border-2">
-    <EditForm Model="_signUpModel" OnValidSubmit="HandleSignUp">
-        <div>
-            <div class="flex flex-row justify-between">
-                <div class="mt-2 w-49 p-3 rounded-lg">
-                    <label for="firstName-input" class="block text-gray-700 dark:text-gray-200">Prénom</label>
-                    <InputText id="firstName-input" @bind-Value="_signUpModel.FirstName"
-                        class="border-2 border-black rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-300 w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+<div class="p-3 rounded-lg border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white">
+    <EditForm Model="signUpModel" OnValidSubmit="HandleSignUp">
+        <div class="flex flex-col items-center">
+            <div class="w-3/4">
+                <div class="flex flex-row justify-between">
+                    <div class="w-49 p-3 rounded-lg">
+                        <label for="firstName-input" class="block text-gray-700 dark:text-gray-200">Prénom</label>
+                        <InputText id="firstName-input" @bind-Value="signUpModel.FirstName"
+                            class="border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+                    </div>
+
+                    <div class="w-49 p-3 rounded-lg">
+                        <label for="pseudo-input" class="block text-gray-700 dark:text-gray-200">Pseudo</label>
+                        <InputText id="pseudo-input" @bind-Value="signUpModel.Pseudo"
+                            class="border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+                    </div>
                 </div>
 
-                <div class="w-49 p-3 rounded-lg">
-                    <label for="pseudo-input" class="block text-gray-700 dark:text-gray-200">Pseudo</label>
-                    <InputText id="pseudo-input" @bind-Value="_signUpModel.Pseudo"
-                        class="border-2 border-black rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-300 w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+                <div class="w-full p-3 rounded-lg">
+                    <label for="email-input" class="block text-gray-700 dark:text-gray-200">Email</label>
+                    <InputText id="email-input" @bind-Value="signUpModel.Email"
+                        class="border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
+                </div>
+
+                <div class="w-full p-3 rounded-lg">
+                    <GenericButton Icon="fa-solid fa-user-plus" Type="submit">
+                        Inscription
+                    </GenericButton>
                 </div>
             </div>
-
-            <div class="w-full p-3 rounded-lg">
-                <label for="email-input" class="block text-gray-700 dark:text-gray-200">Email</label>
-                <InputText id="email-input" @bind-Value="_signUpModel.Email"
-                    class="border-2 border-black rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-300 w-full p-2 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-150" />
-            </div>
-
-            <GenericButton Icon="fa-solid fa-arrow-right-to-bracket mr-1" Type="submit">
-                Inscription
-            </GenericButton>
         </div>
     </EditForm>
 </div>
 
 @code {
-    private SignUpModel _signUpModel = new SignUpModel();
+    private SignUpInputRequest signUpModel = new SignUpInputRequest();
 
     private void HandleSignUp()
     {
-        if (IsValidEmail(_signUpModel.Email) && _signUpModel.FirstName?.Length >= 3 && _signUpModel.Pseudo?.Length >= 3)
+        if (IsValidEmail(signUpModel.Email) && signUpModel.FirstName?.Length >= 3 && signUpModel.Pseudo?.Length >= 3)
         {
             Console.WriteLine("Inscription réussie !");
         }
@@ -46,7 +50,7 @@
         return !string.IsNullOrEmpty(email) && email.Contains("@") && email.Contains(".");
     }
 
-    private class SignUpModel
+    private class SignUpInputRequest
     {
         public string FirstName { get; set; }
         public string Pseudo { get; set; }

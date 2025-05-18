@@ -1,11 +1,11 @@
-﻿@if (_showModal)
+﻿@if (showModal)
 {
     <div class="fixed z-10 inset-0 overflow-y-auto">
 
         <div class="flex items-center justify-center min-h-screen">
             <div class="fixed inset-0 bg-black opacity-30" @onclick="ToggleModal"></div>
 
-            <div class="relative p-4 rounded-lg w-11/12 sm:max-w-lg mx-auto bg-white dark:bg-darkPrimary font-tajawalRegular border-2 border-black">
+            <div class="relative p-4 rounded-lg w-11/12 sm:max-w-lg mx-auto border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white font-tajawalRegular">
 
                 <div class="flex flex-col gap-5">
                     <div class="flex flex-row gap-4 rounded-lg">
@@ -24,12 +24,12 @@
 
                     </div>
                 
-                    @if (_currentTab == "Login")
+                    @if (currentTab == "Login")
                     {
                         <LoginTab />
                     }
 
-                    else if (_currentTab == "SignUp")
+                    else if (currentTab == "SignUp")
                     {
                         <SignUpTab />
                     }
@@ -42,29 +42,29 @@
 
 @code {
 
-    private bool _showModal = false;
-    private string _currentTab { get; set; } = "Login";
+    private bool showModal = false;
+    private string currentTab { get; set; } = "Login";
 
     private void SetLoginTab()
     {
-        _currentTab = "Login";
+        currentTab = "Login";
     }
 
     private void SetSignUpTab()
     {
-        _currentTab = "SignUp";
+        currentTab = "SignUp";
     }
 
     private string GetTabButtonClasses(string tab)
     {
-        return _currentTab == tab
+        return currentTab == tab
             ? "border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-black dark:text-white"
             : "border-2 border-black bg-lightPrimary dark:bg-darkPrimary dark:border-lightPrimary text-gray-500 dark:text-gray-400";
     }
 
     public void ToggleModal()
     {
-        _showModal = !_showModal;
+        showModal = !showModal;
         StateHasChanged();
     }
 
