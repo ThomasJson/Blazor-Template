@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Template.Application.Features.Account.InputRequests;
 using Template.Application.Features.Account.Shared.Dto;
 using Template.Domain.Entities;
 using Template.Persistence.Contexts;
@@ -14,13 +15,13 @@ namespace Template.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<AccountEntity> GetAccountByEmailAdress(AccountDto accountDto)
+        public async Task<AccountEntity> GetAccountByEmailAdress(string email)
         {
             return await _context.Accounts
                 .Include(a => a.User)                 
                 .Include(a => a.RolesLink)            
                     .ThenInclude(r => r.Role)       
-                .FirstOrDefaultAsync(x => x.Email == accountDto.Email);
+                .FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public void Dispose()
