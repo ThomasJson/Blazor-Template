@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
+using Template.Application.Features.Account.InputRequests;
 using Template.Application.Features.Account.Shared.Dto;
 using Template.Application.Interfaces.Services;
 using Template.Domain.Entities;
@@ -20,13 +21,13 @@ namespace Template.Infrastructure.Services.Authentication
             _logger = logger;
         }
 
-        public async Task<AccountEntity> GetAuthenticatedAccount(AccountDto accountDto)
+        public async Task<AccountEntity> GetAuthenticatedAccount(LoginInputRequest loginInputRequest)
         {
             try
             {
-                var accountEntity = await _accountRepository.GetAccountByEmailAdress(accountDto);
+                var accountEntity = await _accountRepository.GetAccountByEmailAdress(loginInputRequest.Email);
                 
-                if (accountEntity == null || accountEntity.Password != accountDto.Password)
+                if (accountEntity == null || accountEntity.Password != loginInputRequest.Password)
                 {
                     return null;
                 }
