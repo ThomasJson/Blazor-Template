@@ -9,6 +9,7 @@
       "program": "${workspaceFolder}/Template.WebUI/bin/Debug/net8.0/Template.WebUI.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Template.WebUI",
+      "console": "externalTerminal",
       "stopAtEntry": false,
       "serverReadyAction": {
         "action": "openExternally",
